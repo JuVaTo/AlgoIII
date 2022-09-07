@@ -1,2 +1,3 @@
 # AlgoIII
-Repo Algo III
+Repositorio Algoritmos y Programacion III
+Alumnos: Julian Rando e Ignacio Iyuschak
