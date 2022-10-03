@@ -415,10 +415,10 @@ Numero subclass: #Entero
 
 	^anAdder addWithEntero: self.! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'JR 10/1/2022 15:59:38'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'JR 10/3/2022 17:11:28'!
 - aSubtrahend 
 
-	^ aSubtrahend subtractFromEntero: self.! !
+	^ aSubtrahend subtractFrom: self.! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'JR 10/1/2022 16:14:19'!
 / aDivisor 
@@ -519,16 +519,10 @@ multiplyWithFraccion: aMultiplier
 
 	^ aMultiplier multiplyWithEntero: self.! !
 
-!Entero methodsFor: 'arithmetic operations - dd' stamp: 'JR 10/1/2022 15:52:58'!
-subtractFromEntero: aSubtrahend
+!Entero methodsFor: 'arithmetic operations - dd' stamp: 'JR 10/3/2022 17:16:04'!
+subtractFrom: aSubtrahend
 
-	^self class with: aSubtrahend integerValue - value.! !
-
-!Entero methodsFor: 'arithmetic operations - dd' stamp: 'JR 10/1/2022 16:10:48'!
-subtractFromFraccion: aSubtrahend
-
-	^Fraccion with: aSubtrahend numerator - (self * aSubtrahend denominator) over: aSubtrahend denominator.
-	! !
+	^ aSubtrahend addWithEntero: self negated.	! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -672,11 +666,10 @@ Numero subclass: #Fraccion
 	
 	^ anAdder addWithFraccion: self.! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'JR 10/1/2022 16:00:56'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'JR 10/3/2022 17:12:33'!
 - aSubtrahend
 
-	^ aSubtrahend subtractFromFraccion: self.
-! !
+	^ aSubtrahend subtractFrom: self.! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'JR 10/1/2022 16:21:17'!
 / aDivisor 
@@ -769,19 +762,10 @@ multiplyWithFraccion: aMultiplier
 
 	^ self class with: numerator * aMultiplier numerator over: denominator * aMultiplier denominator.! !
 
-!Fraccion methodsFor: 'aritmetic operations - dd' stamp: 'JR 10/1/2022 19:23:20'!
-subtractFromEntero: aSubtrahend
+!Fraccion methodsFor: 'aritmetic operations - dd' stamp: 'JR 10/3/2022 17:16:14'!
+subtractFrom: aSubtrahend
 
-	^ self class with: denominator * aSubtrahend - numerator over: denominator.! !
-
-!Fraccion methodsFor: 'aritmetic operations - dd' stamp: 'JR 10/1/2022 16:07:07'!
-subtractFromFraccion: aSubtrahend
-
-	| newNumerator newDenominator |
-	newNumerator :=  (denominator * aSubtrahend numerator) - (numerator * aSubtrahend denominator).
-	newDenominator := denominator * aSubtrahend denominator.
-
-	^ self class with: newNumerator over: newDenominator.! !
+	^ aSubtrahend addWithFraccion: self negated.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -789,7 +773,7 @@ subtractFromFraccion: aSubtrahend
 Fraccion class
 	instanceVariableNames: ''!
 
-!Fraccion class methodsFor: 'instance creation' stamp: 'JR 10/2/2022 16:47:06'!
+!Fraccion class methodsFor: 'instance creation' stamp: 'JR 10/3/2022 16:54:43'!
 with: aDividend over: aDivisor
 
 	| greatestCommonDivisor subclassSelected numerator denominator|
@@ -803,7 +787,7 @@ with: aDividend over: aDivisor
 		numerator := aDividend // greatestCommonDivisor.
 		denominator := aDivisor // greatestCommonDivisor.
 		
-		subclassSelected := FraccionUsaMaximoComunDivisor subclasses detect: [ :comunSubclass | comunSubclass canInstantiateWith: numerator Over: denominator ] ifNone: [ self invalidNumberTypeErrorDescription ].
+		subclassSelected := FraccionUsaMaximoComunDivisor subclasses detect: [ :comunSubclass | comunSubclass canInstantiateWith: numerator Over: denominator ] ifNone: [self invalidNumberTypeErrorDescription ].
 		].
 	
 	^ subclassSelected instantiateWith: numerator Over: denominator.! !
