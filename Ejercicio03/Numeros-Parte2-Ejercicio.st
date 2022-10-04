@@ -372,13 +372,8 @@ multiplyWithFraccion: aMultiplier
 
 	self subclassResponsibility.! !
 
-!Numero methodsFor: 'aritmetic operations - dd' stamp: 'JR 10/1/2022 16:34:09'!
-subtractFromEntero: aSubtrahend
-
-	self subclassResponsibility.! !
-
-!Numero methodsFor: 'aritmetic operations - dd' stamp: 'JR 10/1/2022 16:34:18'!
-subtractFromFraccion: aSubtrahend
+!Numero methodsFor: 'aritmetic operations - dd' stamp: 'JR 10/4/2022 16:00:43'!
+subtractFrom: aSubtrahend
 
 	self subclassResponsibility.! !
 
@@ -747,7 +742,7 @@ divideFromEntero: aDivisor
 
 	^ self class with: aDivisor * denominator over: numerator.! !
 
-!Fraccion methodsFor: 'aritmetic operations - dd' stamp: 'JR 10/1/2022 16:23:36'!
+!Fraccion methodsFor: 'aritmetic operations - dd' stamp: 'JR 10/4/2022 15:59:25'!
 divideFromFraccion: aDivisor
 
 	^ self class with: (aDivisor numerator * denominator) over: (aDivisor denominator * numerator).! !

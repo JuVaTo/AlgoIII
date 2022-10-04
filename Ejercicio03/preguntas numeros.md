@@ -1,10 +1,13 @@
 Preguntas teóricas
 Aporte de los mensajes de DD
 En un double dispatch (DD), ¿qué información aporta cada uno de los dos llamados?
+El primer llamado se utiliza para saber de que clase es el objeto con el que realiza la colaboración, y el segundo es la implementación del método. En el trabajo puede verse como, si realizamos la colaboración unEntero + unNumero (puede ser Entero o Fraccion), el primer llamado lo hace unEntero para saber con quien está colaborando, y el segundo llamado se realiza desde unNumero, en donde se implementa la suma, y que sabe responder con quien se está sumando y como lo hace.
 
 
 Lógica de instanciado
 Con lo que vieron y saben hasta ahora, ¿donde les parece mejor tener la lógica de cómo instanciar un objeto? ¿por qué? ¿Y si se crea ese objeto desde diferentes lugares y de diferentes formas? ¿cómo lo resuelven?
+Debe ser sun mensaje de class, porque es un mensaje que sabe responder la clase, retornando una instancia de la misma. 
+Si se crea un objeto desde distintos lugares, debe utilizar el mensaje provisto en class. Se puede resolver utilizando un switch dinámico.
 
 
 Nombres de las categorías de métodos
