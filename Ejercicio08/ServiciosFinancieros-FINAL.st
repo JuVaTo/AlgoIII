@@ -1310,78 +1310,9 @@ register: aValue on: account
 	^ transaction! !
 
 
-!classDefinition: #ReportAccount category: 'ServiciosFinancieros-Solucion'!
-Object subclass: #ReportAccount
-	instanceVariableNames: 'report'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ServiciosFinancieros-Solucion'!
-
-!ReportAccount methodsFor: 'instance creation' stamp: 'JR 11/14/2022 07:41:55'!
-reportFor: anAccount
-
-	self subclassResponsibility.! !
-
-
-!ReportAccount methodsFor: 'operations' stamp: 'JR 11/17/2022 20:45:40'!
-add: anElement
-
-	report add: anElement.! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'ReportAccount class' category: 'ServiciosFinancieros-Solucion'!
-ReportAccount class
-	instanceVariableNames: ''!
-
-!ReportAccount class methodsFor: 'instance creation' stamp: 'JR 11/14/2022 07:41:27'!
-generateFor: anAccount
-
-	^ self new reportFor: anAccount.! !
-
-
-!classDefinition: #PortfolioTreePrinterReport category: 'ServiciosFinancieros-Solucion'!
-ReportAccount subclass: #PortfolioTreePrinterReport
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ServiciosFinancieros-Solucion'!
-
-!PortfolioTreePrinterReport methodsFor: 'instance creation' stamp: 'JR 11/18/2022 16:30:55'!
-reportFor: aPortfolio
-	
-	report := OrderedCollection new.
-	
-	aPortfolio treePrinter: self anIndentation: self nullIndentation.
-
-	^ report.! !
-
-
-!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:39:40'!
-aNewIndentationLevel
-
-	^ '    '.! !
-
-!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:42:45'!
-addNameOf: anAccount anIndentation: anIndentation
-
-	self add: anIndentation, anAccount name asString.
-! !
-
-!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 16:46:30'!
-nullIndentation
-
-	^ ''.! !
-
-!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:44:03'!
-treePrinter: anAccount anIndentation: anIndentation
-
-	anAccount treePrinter: self anIndentation: anIndentation, self aNewIndentationLevel.! !
-
-
 !classDefinition: #PortfolioDetailedTreePrinterReport category: 'ServiciosFinancieros-Solucion'!
-PortfolioTreePrinterReport subclass: #PortfolioDetailedTreePrinterReport
-	instanceVariableNames: ''
+Object subclass: #PortfolioDetailedTreePrinterReport
+	instanceVariableNames: 'report'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
@@ -1396,11 +1327,32 @@ reportFor: aPortfolio
 	^ report.! !
 
 
+!PortfolioDetailedTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 17:27:47'!
+aNewIndentationLevel
+
+	^ '    '.! !
+
+!PortfolioDetailedTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 17:30:28'!
+add: anElement
+
+	report add: anElement.! !
+
 !PortfolioDetailedTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:53:48'!
 addBalanceOf: anAccount anIndentation: anIndentation
 
 	self add: anIndentation, self aNewIndentationLevel, 'Balance = ', anAccount balance asString.
 ! !
+
+!PortfolioDetailedTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 17:32:42'!
+addNameOf: anAccount anIndentation: anIndentation
+
+	self add: anIndentation, anAccount name asString.
+! !
+
+!PortfolioDetailedTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 17:28:51'!
+nullIndentation
+
+	^ ''.! !
 
 !PortfolioDetailedTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:51:27'!
 treeDetailedPrinter: anAccount anIndentation: anIndentation
@@ -1433,10 +1385,132 @@ descriptionLineForWithdrawLeg: aWithdrawLeg anIndentation: anIndentation
 
 	self add: anIndentation, 'Transfer withdraw of ', aWithdrawLeg value asString.! !
 
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'PortfolioDetailedTreePrinterReport class' category: 'ServiciosFinancieros-Solucion'!
+PortfolioDetailedTreePrinterReport class
+	instanceVariableNames: ''!
+
+!PortfolioDetailedTreePrinterReport class methodsFor: 'as yet unclassified' stamp: 'JR 11/18/2022 17:29:53'!
+generateFor: anAccount
+
+	^ self new reportFor: anAccount.! !
+
+
+!classDefinition: #PortfolioTreePrinterReport category: 'ServiciosFinancieros-Solucion'!
+Object subclass: #PortfolioTreePrinterReport
+	instanceVariableNames: 'report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Solucion'!
+
+!PortfolioTreePrinterReport methodsFor: 'instance creation' stamp: 'JR 11/18/2022 17:28:21'!
+reportFor: aPortfolio
+	
+	report := OrderedCollection new.
+	
+	aPortfolio treePrinter: self anIndentation: self nullIndentation.
+
+	^ report.! !
+
+
+!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:39:40'!
+aNewIndentationLevel
+
+	^ '    '.! !
+
+!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 17:30:23'!
+add: anElement
+
+	report add: anElement.! !
+
+!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:42:45'!
+addNameOf: anAccount anIndentation: anIndentation
+
+	self add: anIndentation, anAccount name asString.
+! !
+
+!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 17:28:46'!
+nullIndentation
+
+	^ ''.! !
+
+!PortfolioTreePrinterReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:44:03'!
+treePrinter: anAccount anIndentation: anIndentation
+
+	anAccount treePrinter: self anIndentation: anIndentation, self aNewIndentationLevel.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'PortfolioTreePrinterReport class' category: 'ServiciosFinancieros-Solucion'!
+PortfolioTreePrinterReport class
+	instanceVariableNames: ''!
+
+!PortfolioTreePrinterReport class methodsFor: 'instance creation' stamp: 'JR 11/18/2022 17:29:45'!
+generateFor: anAccount
+
+	^ self new reportFor: anAccount.! !
+
+
+!classDefinition: #ReportAccount category: 'ServiciosFinancieros-Solucion'!
+Object subclass: #ReportAccount
+	instanceVariableNames: 'report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Solucion'!
+
+!ReportAccount methodsFor: 'instance creation' stamp: 'JR 11/14/2022 07:41:55'!
+reportFor: anAccount
+
+	self subclassResponsibility.! !
+
+
+!ReportAccount methodsFor: 'description line' stamp: 'JR 11/18/2022 16:16:43'!
+descriptionLineForDeposit: aDeposit anIndentation: anIndentation
+
+	self add: anIndentation, 'Deposit of ', aDeposit value asString.! !
+
+!ReportAccount methodsFor: 'description line' stamp: 'JR 11/18/2022 16:17:03'!
+descriptionLineForDepositLeg: aDepositLeg anIndentation: anIndentation
+
+	self add: anIndentation, 'Transfer deposit of ', aDepositLeg value asString.! !
+
+!ReportAccount methodsFor: 'description line' stamp: 'JR 11/18/2022 16:17:13'!
+descriptionLineForWithdraw: aWithdraw anIndentation: anIndentation
+
+	self add: anIndentation, 'Withdraw of ', aWithdraw value asString.! !
+
+!ReportAccount methodsFor: 'description line' stamp: 'JR 11/18/2022 16:17:24'!
+descriptionLineForWithdrawLeg: aWithdrawLeg anIndentation: anIndentation
+
+	self add: anIndentation, 'Transfer withdraw of ', aWithdrawLeg value asString.! !
+
+
+!ReportAccount methodsFor: 'operations' stamp: 'JR 11/17/2022 20:45:40'!
+add: anElement
+
+	report add: anElement.! !
+
+!ReportAccount methodsFor: 'operations' stamp: 'JR 11/18/2022 16:30:31'!
+nullIndentation
+
+	^ ''.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ReportAccount class' category: 'ServiciosFinancieros-Solucion'!
+ReportAccount class
+	instanceVariableNames: ''!
+
+!ReportAccount class methodsFor: 'instance creation' stamp: 'JR 11/14/2022 07:41:27'!
+generateFor: anAccount
+
+	^ self new reportFor: anAccount.! !
+
 
 !classDefinition: #SummaryReport category: 'ServiciosFinancieros-Solucion'!
-ReportAccount subclass: #SummaryReport
-	instanceVariableNames: ''
+Object subclass: #SummaryReport
+	instanceVariableNames: 'report'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
@@ -1459,7 +1533,12 @@ reportFor: anAccount
 	^ report.! !
 
 
-!SummaryReport methodsFor: 'description line' stamp: 'JR 11/18/2022 16:46:08'!
+!SummaryReport methodsFor: 'description line' stamp: 'JR 11/18/2022 17:26:12'!
+add: anElement
+
+	report add: anElement.! !
+
+!SummaryReport methodsFor: 'description line' stamp: 'JR 11/18/2022 17:29:08'!
 descriptionLine: aTransaction
 
 	aTransaction descriptionLine: self.! !
@@ -1484,64 +1563,16 @@ descriptionLineForWithdrawLeg: aWithdrawLeg.
 
 	self add: 'Transfer withdraw of ', aWithdrawLeg value asString.! !
 
-
-!classDefinition: #TransferNetReport category: 'ServiciosFinancieros-Solucion'!
-ReportAccount subclass: #TransferNetReport
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ServiciosFinancieros-Solucion'!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!TransferNetReport methodsFor: 'operations' stamp: 'JR 11/17/2022 21:06:46'!
-add: aValue
+!classDefinition: 'SummaryReport class' category: 'ServiciosFinancieros-Solucion'!
+SummaryReport class
+	instanceVariableNames: ''!
 
-	report := report + aValue.! !
+!SummaryReport class methodsFor: 'instance creation' stamp: 'JR 11/18/2022 17:29:26'!
+generateFor: anAccount
 
-!TransferNetReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:37:29'!
-transferNet: anAccount
-
-	anAccount transferNet: self.! !
-
-
-!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/17/2022 21:06:23'!
-depositLegValue: aDepositLeg
-
-	self add: aDepositLeg value.! !
-
-!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/17/2022 21:06:24'!
-depositValue: aDeposit
-
-	self add: self noAffectValue.! !
-
-!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/16/2022 11:02:36'!
-noAffectValue
-
-	^ 0 * peso.! !
-
-!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/18/2022 14:38:14'!
-valueForTransferNet: aTransaction
-
-	aTransaction valueForTransferNet: self.! !
-
-!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/17/2022 21:06:23'!
-withdrawLegValue: aWithdrawLeg
-
-	self add: aWithdrawLeg value negated.! !
-
-!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/17/2022 21:06:23'!
-withdrawValue: aWithdraw
-
-	self add: self noAffectValue.! !
-
-
-!TransferNetReport methodsFor: 'instance creation' stamp: 'JR 11/18/2022 16:29:21'!
-reportFor: anAccount
-
-	report := 0 * peso.
-		
-	self transferNet: anAccount.
-	
-	^ report.! !
+	^ self new reportFor: anAccount.! !
 
 
 !classDefinition: #Transfer category: 'ServiciosFinancieros-Solucion'!
@@ -1635,3 +1666,73 @@ amount: anAmountOfMoney from: originAccount to: destinationAccount
 	
 	
 	! !
+
+
+!classDefinition: #TransferNetReport category: 'ServiciosFinancieros-Solucion'!
+Object subclass: #TransferNetReport
+	instanceVariableNames: 'report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Solucion'!
+
+!TransferNetReport methodsFor: 'operations' stamp: 'JR 11/17/2022 21:06:46'!
+add: aValue
+
+	report := report + aValue.! !
+
+!TransferNetReport methodsFor: 'operations' stamp: 'JR 11/18/2022 14:37:29'!
+transferNet: anAccount
+
+	anAccount transferNet: self.! !
+
+
+!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/17/2022 21:06:23'!
+depositLegValue: aDepositLeg
+
+	self add: aDepositLeg value.! !
+
+!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/17/2022 21:06:24'!
+depositValue: aDeposit
+
+	self add: self noAffectValue.! !
+
+!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/16/2022 11:02:36'!
+noAffectValue
+
+	^ 0 * peso.! !
+
+!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/18/2022 14:38:14'!
+valueForTransferNet: aTransaction
+
+	aTransaction valueForTransferNet: self.! !
+
+!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/17/2022 21:06:23'!
+withdrawLegValue: aWithdrawLeg
+
+	self add: aWithdrawLeg value negated.! !
+
+!TransferNetReport methodsFor: 'value transfer net' stamp: 'JR 11/17/2022 21:06:23'!
+withdrawValue: aWithdraw
+
+	self add: self noAffectValue.! !
+
+
+!TransferNetReport methodsFor: 'instance creation' stamp: 'JR 11/18/2022 16:29:21'!
+reportFor: anAccount
+
+	report := 0 * peso.
+		
+	self transferNet: anAccount.
+	
+	^ report.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TransferNetReport class' category: 'ServiciosFinancieros-Solucion'!
+TransferNetReport class
+	instanceVariableNames: 'report'!
+
+!TransferNetReport class methodsFor: 'instance creation' stamp: 'JR 11/18/2022 17:32:00'!
+generateFor: anAccount
+
+	^ self new reportFor: anAccount.! !
